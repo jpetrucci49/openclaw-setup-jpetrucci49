@@ -39,6 +39,23 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 
 Add whatever helps you do your job. This is your cheat sheet.
 
+## Composio shortcuts
+
+For Google Calendar, Google Docs, and similar Composio tasks:
+
+- Use the configured `composio` MCP server directly; do not run discovery searches unless a call fails.
+- Default timezone: `America/New_York`.
+- Typical calendar flow: create event with title, start, end, and optional description in one call.
+
+## Zapier MCP
+
+Primary integration path for Google Docs, Google Calendar, Gmail, Google Drive, Google Tasks, GitHub, and Telegram actions.
+
+- MCP server name: `zapier` (OAuth via `openclaw mcp login zapier`)
+- Endpoint: `https://mcp.zapier.com/api/v1/connect`
+- After OAuth, enable app tools in the Zapier MCP dashboard or via the `get_zapier_skill` onboarding flow.
+- Telegram is also available natively as an OpenClaw channel; use Zapier Telegram tools only when an action must go through Zapier.
+
 ## Related
 
 - [Agent workspace](/concepts/agent-workspace)

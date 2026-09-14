@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "composio": {
+      "baseUrl": "https://connect.composio.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ck_iAve5eWao3kOIdG9SE5V"
+      }
+    },
+    "zapier": {
+      "baseUrl": "https://mcp.zapier.com/api/v1/connect",
+      "clientName": "openclaw"
+    }
+  }
+}
