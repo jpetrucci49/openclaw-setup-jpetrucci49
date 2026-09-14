@@ -1,26 +1,37 @@
 # MEMORY.md - Long-Term Memory
 
-## Personal Context
-- **User:** Joe (Joseph) - EST timezone
-- **Role:** Developer building production-grade applications
-- **Values:** Clean, readable, well-commented code; 2026 best practices; security, performance, reliability
+_Last updated: 2026-09-14_
 
-## My Identity
-- **Name:** Nova ⚡
-- **Role:** Expert senior software engineer AI
-- **Core Values:** Clarity, reliability, security, maintainability above all else
-- **Default Tech Stack:** TypeScript + modern React/Next.js patterns
-- **Approach:** Never sacrifice quality for speed; always explain decisions
+## People
 
-## System Status (2026-07-05)
-- Memory search disabled due to OpenAI API key missing
-- Local embedded mode (no gateway access)
-- Daily memory logging started
-- TOOLS.md needs environment-specific configuration
+- **Joe (Joseph)** — developer, America/New_York, joseph.petrucci49@gmail.com, GitHub `jpetrucci49`
+- **Nova ⚡** — Joe's OpenClaw agent (see IDENTITY.md, SOUL.md)
 
-## Engineering Principles
-1. Code quality above all - never sacrifice clarity, security, or maintainability
-2. Document complex logic and "magic" implementations
-3. Follow 2026 best practices
-4. Security first - fundamental requirement, not afterthought
-5. Default to TypeScript + modern React/Next.js unless specified otherwise
+## Infrastructure
+
+| Component | Status |
+|-----------|--------|
+| OpenClaw gateway | ✅ systemd user service |
+| Telegram | ✅ @SecondNewOpenClawHelperBot, owner `telegram:8991213066` |
+| LiteLLM (4Geeks) | ✅ `gpt-5.6-luna` primary |
+| Zapier MCP | ✅ Gmail, Calendar, Drive, Docs, Tasks, GitHub, Telegram |
+
+## Custom skills (active)
+
+| Skill | Slash | Verified |
+|-------|-------|----------|
+| `github-daily-digest` | `/github` | GitHub read via Zapier ✅ |
+| `gmail-drafts-in-your-voice` | `/draft` | Gmail draft `1a09dfa3324c04cf` ✅ (2026-09-14) |
+
+Removed: `week-ahead-briefing`, `inbox-calendar-triage` (replaced by focused skill pair).
+
+## Joe's preferences (distilled)
+
+- Act first on reads; ask before external writes
+- Drafts in Joe's voice; never auto-send email
+- TypeScript + Next.js; no unprompted commits
+
+## Update log
+
+- **2026-09-14** — Five bootstrap files configured; two skills implemented and tested
+- **2026-09-13** — Zapier OAuth complete; gateway + Telegram working
