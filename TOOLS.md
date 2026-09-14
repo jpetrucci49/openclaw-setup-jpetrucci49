@@ -1,61 +1,102 @@
-# TOOLS.md - Local Notes
+# TOOLS.md - Joe's Integration Cheat Sheet
 
-Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
+Skills define _how_; this file defines _your_ accounts, defaults, and when to use each service.
 
-## What Goes Here
+## mcporter (MCP CLI)
 
-Things like:
+| Setting | Value |
+|---------|-------|
+| Workspace config | `/root/.openclaw/workspace/config/mcporter.json` |
+| Fallback (cwd `/root`) | `/root/config/mcporter.json` |
+| List Zapier tools | `mcporter list zapier --schema` |
+| Before first execute | `mcporter call zapier.inspect_zapier_actions selected_api=...` |
 
-- Camera names and locations
-- SSH hosts and aliases
-- Preferred voices for TTS
-- Speaker/room names
-- Device nicknames
-- Anything environment-specific
-
-## Examples
-
-```markdown
-### Cameras
-
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
-
-### SSH
-
-- home-server → 192.168.1.100, user: admin
-
-### TTS
-
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
-```
-
-## Why Separate?
-
-Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
+Always pass `--output json` for machine-readable results.
 
 ---
 
-Add whatever helps you do your job. This is your cheat sheet.
+## Zapier MCP — when to use what
 
-## Composio shortcuts
+**Primary path for all Google + GitHub actions.** OAuth is complete — do not start new OAuth flows.
 
-For Google Calendar, Google Docs, and similar Composio tasks:
+| Service | `selected_api` | Use when | Default account |
+|---------|----------------|----------|-----------------|
+| **Gmail** | `GoogleMailV2CLIAPI` | `/draft`, read inbox, search threads | joseph.petrucci49@gmail.com |
+| **Google Calendar** | `GoogleCalendarCLIAPI` | Schedule events, find conflicts, busy times | joseph.petrucci49@gmail.com (primary calendar) |
+| **Google Drive** | `GoogleDriveCLIAPI` | Save meeting notes, uploads | joseph.petrucci49@gmail.com |
+| **Google Docs** | `GoogleDocsV2CLIAPI` | Append learning logs, formatted docs | joseph.petrucci49@gmail.com |
+| **Google Tasks** | `GoogleTasksCLIAPI` | Action items, todo list | Default task list |
+| **GitHub** | `GitHubCLIAPI` | `/github` digest, issues, PRs, reviews | jpetrucci49 |
+| **Telegram (Zapier)** | `TelegramCLIAPI` | Only if action must go through Zapier | @SecondNewOpenClawHelperBot |
 
-- Use the configured `composio` MCP server directly; do not run discovery searches unless a call fails.
-- Default timezone: `America/New_York`.
-- Typical calendar flow: create event with title, start, end, and optional description in one call.
+**Prefer native OpenClaw Telegram** for delivering replies to Joe (`telegram:8991213066`). Use Zapier Telegram only for Zapier-specific automations.
 
-## Zapier MCP
+---
 
-Primary integration path for Google Docs, Google Calendar, Gmail, Google Drive, Google Tasks, GitHub, and Telegram actions.
+## Service defaults
 
-- MCP server name: `zapier` (OAuth via `openclaw mcp login zapier`)
-- Endpoint: `https://mcp.zapier.com/api/v1/connect`
-- After OAuth, enable app tools in the Zapier MCP dashboard or via the `get_zapier_skill` onboarding flow.
-- Telegram is also available natively as an OpenClaw channel; use Zapier Telegram tools only when an action must go through Zapier.
+### Gmail
 
-## Related
+- **Account:** joseph.petrucci49@gmail.com
+- **Draft workflow:** Preview in chat → Joe approves → `gmail_create_draft` or `google_mail_create_draft_reply`
+- **Sign-off:** `Best, Joe` — see `USER.md` § Email voice
+- **Never** use send actions (`message`, `reply_to_message`) unless Joe says "send it"
 
-- [Agent workspace](/concepts/agent-workspace)
+### Google Calendar
+
+- **Calendar:** Primary (joseph.petrucci49@gmail.com)
+- **Timezone:** `America/New_York` on all events
+- **Create events:** Only after Joe confirms time and title
+
+### Google Drive / Docs
+
+- **Account:** joseph.petrucci49@gmail.com
+- **Meeting notes folder:** _(not set yet — ask Joe before first save)_
+- **Learning journal doc:** _(not set yet — ask Joe before first append)_
+
+### Google Tasks
+
+- **List:** Default
+- **Use for:** Action items Joe explicitly asks to create — not auto-created by current skills
+
+### GitHub
+
+- **User:** jpetrucci49
+- **Read freely** for `/github`; no writes without approval per `AGENTS.md`
+
+---
+
+## Custom skills
+
+| Skill | Slash | Zapier touchpoint | Output destination |
+|-------|-------|-------------------|-------------------|
+| `github-daily-digest` | `/github` | GitHub read actions | Telegram / TUI message |
+| `gmail-drafts-in-your-voice` | `/draft` | Gmail draft write | Gmail Drafts folder |
+
+Both skills **must** read `USER.md` (voice, accounts) and `SOUL.md` (preview-before-save) before executing.
+
+---
+
+## Composio (secondary — not OAuth'd)
+
+Configured in mcporter but not authenticated. **Use Zapier first.** Fall back to Composio only if Joe completes OAuth and Zapier is unavailable.
+
+---
+
+## Telegram (native channel)
+
+| Setting | Value |
+|---------|-------|
+| Bot | @SecondNewOpenClawHelperBot |
+| Owner | `telegram:8991213066` |
+| Policy | Pairing; groups require @mention |
+
+Deliver `/github` digests here when Joe is on mobile. Keep under ~4,000 characters.
+
+---
+
+## Verified integrations (2026-09-14)
+
+- **Gmail draft write:** ✅ `gmail_create_draft` — test draft id `1a09dfa3324c04cf` (subject: "OpenClaw /draft skill verification")
+- **GitHub read:** ✅ `github_new_notification` — returns successfully (empty when no notifications)
+- **Zapier OAuth:** ✅ All seven apps enabled per `MEMORY.md`
