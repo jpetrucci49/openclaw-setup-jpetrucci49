@@ -1,5 +1,13 @@
-<!-- Heartbeat template; comments-only content prevents scheduled heartbeat API calls. -->
+# HEARTBEAT.md - Periodic Checks
 
-# Keep this file empty (or with only comments) to skip heartbeat API calls.
+Lightweight, read-only nudges. See `AGENTS.md` Hard Limits — no external writes on heartbeat.
 
-# Add tasks below when you want the agent to check something periodically.
+## Weekdays
+
+- [ ] **GitHub pulse** — if >24h since last check, suggest `/github` when Joe messages
+- [ ] **Gateway** — alert only if gateway is down
+
+## Never on heartbeat
+
+- Send email, create drafts, or post to GitHub
+- Restart gateway or change config unprompted
