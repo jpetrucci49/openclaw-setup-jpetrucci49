@@ -27,11 +27,37 @@ Joe then attached `STUDENT_API_CALLS_REFERENCE---857517e5-7226-4163-9410-a4ea150
    - Proposal ID: `breathecode-my-tasks-read-20260914-9374704797`
    - Status: pending; not installed.
 
+4. **breathecode-token-auth-check**
+   - Focus: one authenticated `GET /v1/admissions/user/me` request.
+   - Scope: validate token presence/acceptance only; read-only; no profile dump and no writes.
+   - Proposal ID: `breathecode-token-auth-check-20260915-a582c60c7b`
+   - Status: applied and tested.
+   - Test result: HTTP 200 on 2026-09-15; token accepted and authenticated profile endpoint reachable.
+
 ### Security decisions
 - The student token was not requested, pasted, stored, or logged.
 - No external API call was made.
 - No skill was applied or installed; all proposals require separate explicit approval.
 - Proposed skills must never expose credentials in chat, logs, memory, skill files, or error reports.
 
+## 2026-09-15 — Token authentication check
+
+### Conversation context
+Joe specified that `TOKEN_4GEEKS` is stored in `~/.openclaw/.env` and requested that the first skill validate the token and confirm the session is active. The API reference does not define a separate session-status endpoint, so the skill uses the authenticated current-user endpoint as the token acceptance test.
+
+### Skill implemented
+
+4. **breathecode-token-auth-check**
+   - Focus: one authenticated `GET /v1/admissions/user/me` request.
+   - Scope: validate token presence/acceptance only; read-only; no profile dump and no writes.
+   - Proposal ID: `breathecode-token-auth-check-20260915-a582c60c7b`
+   - Status: applied and tested.
+   - Test result: HTTP 200 on 2026-09-15; token accepted and authenticated profile endpoint reachable.
+
+### Security decisions
+- `~/.openclaw/.env` was used only as the local secret source; the token value was never printed or logged.
+- The test made exactly one GET request and discarded the response body.
+- No write operation was performed.
+- A successful result confirms current token acceptance, not a distinct server-side session.
 ### Source
-Attached API reference: `STUDENT_API_CALLS_REFERENCE---857517e5-7226-4163-9410-a4ea150a36a3.md`, received 2026-09-14. Base URL documented there: `https://breathecode.herokuapp.com`.
+Attached API reference: `STUDENT_API_CALLS_REFERENCE---857517e5-7226-4163-9410-a4ea150a36a3.md`.
