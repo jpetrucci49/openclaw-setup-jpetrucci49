@@ -108,13 +108,14 @@ Joe requested the next skill to get pending work and list what remains to be com
 ### Conversation context
 Joe requested the next skill to provide a general overview of how far along he is in the course. Based on the API reference, this is defined as an activity-based summary from `GET /v1/activity/me`, not a task list or invented completion percentage.
 
-### Skill proposed
+### Skill implemented
 
 7. **breathecode-progress-summary-read**
    - Focus: one personal activity API action.
    - Scope: summarize the authenticated student’s learning activity, time, exercises, and recent activity when available; no tasks, projects, cohorts, assets, certificates, or writes.
    - Proposal ID: `breathecode-progress-summary-read-20260915-cb0e269f02`
-   - Status: pending; not installed.
+   - Status: applied and tested.
+   - Test result: HTTP 403 from `/v1/activity/me`; no activity summary could be retrieved. Token and response body were not exposed.
 
 ### Security decisions
 - No external API request was made.
