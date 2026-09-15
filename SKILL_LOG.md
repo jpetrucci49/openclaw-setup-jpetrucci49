@@ -142,3 +142,23 @@ Joe requested the next skill to answer which cohort he is in, including cohort s
 - No token value was read, printed, stored, or logged.
 - The proposal must be explicitly approved before installation or execution.
 - Memory search was attempted but unavailable because index metadata is missing.
+
+## 2026-09-15 — Task detail and feedback read skill
+
+### Conversation context
+Joe requested the final skill to retrieve task detail and feedback. This is defined as one specific task-detail request using `GET /v1/assignment/task/{task_id}`. It remains read-only and does not list, update, or deliver tasks.
+
+### Skill proposed
+
+9. **breathecode-task-detail-read**
+   - Focus: one task-detail API action for one numeric task ID.
+   - Scope: return task description, status, score, feedback, and review metadata when available; no writes.
+   - Proposal ID: `breathecode-task-detail-read-20260915-2bf2242528`
+   - Status: pending; not installed.
+
+### Security decisions
+- No external API request was made.
+- No token value was read, printed, stored, or logged.
+- Task details and feedback are private and must not be written to memory or logs.
+- The proposal must be explicitly approved before installation or execution.
+- Memory search was attempted but unavailable because index metadata is missing.
