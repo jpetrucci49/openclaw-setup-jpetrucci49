@@ -67,14 +67,15 @@ Attached API reference: `STUDENT_API_CALLS_REFERENCE---857517e5-7226-4163-9410-a
 ### Conversation context
 Joe first requested a skill to get the status of active projects. The initial interpretation was pending assigned project tasks. Joe clarified that the skill must retrieve projects with their current status: pending, submitted, or graded.
 
-### Skill revised
+### Skill implemented
 
 5. **breathecode-active-projects-read**
    - Focus: one assigned-task API action filtered to `task_type=PROJECT`.
    - Scope: list project tasks across statuses with pagination; no details, writes, delivery, or unrelated endpoints.
    - Status mapping: `PENDING` → Pending; `DONE` → Submitted; `APPROVED` → Graded — approved; `REJECTED` → Graded — changes requested.
    - Proposal ID: `breathecode-active-projects-read-20260915-0a3b7a01c7`
-   - Status: pending; revised to v2; not installed.
+   - Status: applied and tested.
+   - Test result: HTTP 200; 62 project tasks returned — 12 PENDING and 50 DONE.
 
 ### Security decisions
 - No external API request was made.
