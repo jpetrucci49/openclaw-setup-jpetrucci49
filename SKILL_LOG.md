@@ -143,6 +143,24 @@ Joe requested the next skill to answer which cohort he is in, including cohort s
 - The proposal must be explicitly approved before installation or execution.
 - Memory search was attempted but unavailable because index metadata is missing.
 
+## 2026-09-15 — Endpoint access diagnosis
+
+### Conversation context
+Joe requested that the HTTP 403 results for activity and cohort endpoints be fixed to return HTTP 200.
+
+### Findings
+- Cohort endpoint without context: HTTP 403.
+- Current-user profile supplied academy id `4`.
+- Cohort endpoint with `academy=4`: HTTP 200, empty enrollment list.
+- Cohort endpoint with trailing slash: HTTP 404.
+- Activity endpoint returned HTTP 403 with no filter, `academy=4`, `cohort=4`, combined filters, and date filters; trailing slash returned HTTP 404.
+- No response bodies or token values were recorded.
+
+### Remediation applied
+- Applied update proposal `breathecode-my-cohorts-read-20260915-bb13f06d57` to resolve academy context from the profile and pass it to the cohort endpoint.
+- End-to-end retest: profile HTTP 200; resolved academy context; cohort endpoint with the resolved academy HTTP 200; enrollment count 0.
+- Activity remains unresolved: the documented route appears permission-denied for this token/instance, and no safe parameter change produced HTTP 200. It must not be falsely marked successful.
+
 ## 2026-09-15 — Task detail and feedback read skill
 
 ### Conversation context
