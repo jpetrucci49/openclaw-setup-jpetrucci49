@@ -148,13 +148,13 @@ Joe requested the next skill to answer which cohort he is in, including cohort s
 ### Conversation context
 Joe requested the final skill to retrieve task detail and feedback. This is defined as one specific task-detail request using `GET /v1/assignment/task/{task_id}`. It remains read-only and does not list, update, or deliver tasks.
 
-### Skill proposed
+### Skill implemented
 
 9. **breathecode-task-detail-read**
    - Focus: one task-detail API action for one numeric task ID.
    - Scope: return task description, status, score, feedback, and review metadata when available; no writes.
    - Proposal ID: `breathecode-task-detail-read-20260915-2bf2242528`
-   - Status: pending; not installed.
+   - Status: applied; awaiting a task ID for live API testing.
 
 ### Security decisions
 - No external API request was made.
