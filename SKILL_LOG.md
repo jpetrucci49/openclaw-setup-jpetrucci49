@@ -143,6 +143,20 @@ Joe requested the next skill to answer which cohort he is in, including cohort s
 - The proposal must be explicitly approved before installation or execution.
 - Memory search was attempted but unavailable because index metadata is missing.
 
+## 2026-09-15 — Profile-response repair diagnosis
+
+### Findings
+- `GET /v1/admissions/user/me` returns HTTP 200 and includes the authoritative `cohorts[]` array.
+- Each cohort record includes cohort id/name/slug, kickoff and ending dates, role, `educational_status`, and `completion` with overall and required progress.
+- The secondary cohort endpoint returned an empty list for academy=4 and 403 for other profile academy IDs.
+- `/v1/activity/me` returned 403 with all tested documented filters.
+
+### Remediation applied
+- Applied cohort update: `breathecode-my-cohorts-read-20260915-3bcdd1f558`; use profile `cohorts[]`.
+- Applied progress update: `breathecode-progress-summary-read-20260915-546932838c`; use profile `cohorts[].completion`.
+- Live verification: profile HTTP 200; 27 cohort records returned, including 19 ACTIVE and 8 GRADUATED; 16 records report 100% completion.
+- No token or raw response body was logged.
+
 ## 2026-09-15 — Endpoint access diagnosis
 
 ### Conversation context

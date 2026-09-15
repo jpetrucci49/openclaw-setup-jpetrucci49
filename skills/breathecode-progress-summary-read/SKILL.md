@@ -1,39 +1,35 @@
 ---
 name: "breathecode-progress-summary-read"
-description: "Summarize the authenticated student’s 4Geeks course progress from personal activity."
+description: "Summarize course progress from the student profile’s cohort completion data."
 ---
 
-# BreatheCode Progress Summary Read
+# BreatheCode Progress Summary Read — v2
 
 ## Purpose
-Provide a general overview of the authenticated student’s progress through the 4Geeks course using the student’s own learning activity.
+Provide a general course-progress overview from the authenticated student’s profile cohort completion data.
 
 ## Endpoint
-- `GET https://breathecode.herokuapp.com/v1/activity/me`
+- `GET https://breathecode.herokuapp.com/v1/admissions/user/me`
 - Authentication: `Authorization: Token <TOKEN_4GEEKS>`
-- Optional query parameters:
-  - `cohort` (id or slug, according to the instance)
-  - `date_start`
-  - `date_end`
-
-## Credential safety
-- Read `TOKEN_4GEEKS` from `~/.openclaw/.env` or the approved local secret mechanism at execution time.
-- Never print, persist, or log the token, authorization header, raw response, or unrelated sensitive profile data.
+- Use `cohorts[].completion` as the authoritative progress source when present.
 
 ## Output
-Return a concise overview using fields actually provided by the API, such as:
-- activity period covered
-- learning activity/time
-- exercises or learning events recorded
-- cohort context when present
-- notable recent activity or inactivity
+Return a concise summary including:
+- active cohort names and statuses
+- per-cohort completion: total, completed, percentage, and `is_complete` when provided
+- required-work completion and pending required count
+- missing required project slugs when useful
+- an aggregate overview only when aggregation is mathematically valid; otherwise keep cohorts separate
 
-Do not invent a completion percentage, rank, or “course percentage” unless the API explicitly supplies the required denominator and numerator. If the endpoint provides activity but not total curriculum completion, say so plainly and present an activity-based progress summary instead.
+Do not use or call `/v1/activity/me` for this skill because it returns 403 for this token/instance. Do not invent percentages. Clearly distinguish profile-provided completion from activity-based metrics, which are unavailable.
+
+## Credential and privacy safety
+- Read `TOKEN_4GEEKS` from `~/.openclaw/.env` or approved local secret storage at execution time.
+- Never print or log the token, authorization header, raw response, or unrelated profile data.
+- Return progress data only to Joe in the private conversation.
 
 ## Scope boundary
-- Read-only and focused on one API action.
-- Do not fetch assigned tasks, project statuses, cohort enrollments, registry assets, certificates, or perform writes.
-- Use the optional date and cohort filters only when needed, and avoid bursts of duplicate requests.
+Read-only and limited to this one profile API action. Do not call task, project, cohort-secondary, activity, registry, certificate, or write endpoints.
 
-## Source and interpretation
-Attached `STUDENT_API_CALLS_REFERENCE---857517e5-7226-4163-9410-a4ea150a36a3.md`, received 2026-09-14. The reference describes `/v1/activity/me` as user learning activity including time and exercises; it does not guarantee a curriculum-completion percentage.
+## Live evidence
+The profile endpoint returned HTTP 200 with authoritative cohort completion records. `/v1/activity/me` returned HTTP 403 without and with documented filters, so activity-based progress is not available from this instance/token.

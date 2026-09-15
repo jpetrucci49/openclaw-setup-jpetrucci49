@@ -1,32 +1,35 @@
 ---
 name: "breathecode-my-cohorts-read"
-description: "Identify the student’s 4Geeks cohort, schedule, role, and enrollment status."
+description: "Read the student’s 4Geeks cohorts, schedules, roles, statuses, and completion."
 ---
 
-# BreatheCode My Cohorts Read — v2
+# BreatheCode My Cohorts Read — v3
 
 ## Purpose
-Identify the authenticated student’s 4Geeks cohort enrollments and report cohort identity, schedule, role, and educational status.
+Identify the authenticated student’s 4Geeks cohort enrollments and report cohort identity, schedule, role, educational status, and completion when available.
 
 ## Endpoint
-- `GET https://breathecode.herokuapp.com/v1/admissions/academy/cohort/me?academy=<academy_id>`
+- `GET https://breathecode.herokuapp.com/v1/admissions/user/me`
 - Authentication: `Authorization: Token <TOKEN_4GEEKS>`
-- The `academy` query parameter is required by this instance.
-- Resolve `academy_id` from the authenticated profile’s `profile_academy` relation before calling this endpoint. Do not hardcode it.
-- Optional query: `educational_status` for targeted filtering such as `ACTIVE` or `GRADUATED`.
-
-## Credential and privacy safety
-- Read `TOKEN_4GEEKS` from `~/.openclaw/.env` or the approved local secret mechanism at execution time.
-- Never print or log the token, authorization header, raw response, or unrelated profile data.
-- Return cohort data only in Joe’s private conversation.
+- Use the response’s `cohorts[]` array as the authoritative enrollment source.
 
 ## Output
-Return each enrollment with available safe fields: cohort id/name/slug, schedule, role, educational status, and enrollment date. Clearly distinguish `ACTIVE`, `GRADUATED`, `SUSPENDED`, and `DROPPED`. If multiple active cohorts exist, list all. If the filtered response is empty, say no enrollments were returned for the resolved academy.
+For each `cohorts[]` record, return available safe fields:
+- `cohort.id`, `cohort.name`, `cohort.slug`
+- `cohort.kickoff_date`, `cohort.ending_date`, and schedule fields when present
+- enrollment `role`
+- `educational_status` (`ACTIVE`, `GRADUATED`, `SUSPENDED`, or `DROPPED`)
+- completion summary only when present
+
+Clearly separate active and graduated cohorts. List all returned records; do not infer a single cohort. If the array is empty, report that no cohort enrollments were returned.
+
+## Credential and privacy safety
+- Read `TOKEN_4GEEKS` from `~/.openclaw/.env` or approved local secret storage at execution time.
+- Never print or log the token, authorization header, raw response, or unrelated profile fields.
+- Return cohort data only to Joe in the private conversation.
 
 ## Scope boundary
-Read-only. Do not fetch tasks, activity, profile data beyond the minimum academy id, projects, certificates, or perform writes.
+Read-only and limited to this one profile API action. Do not call the secondary cohort endpoint, task endpoints, activity endpoints, or perform writes.
 
-## Test evidence
-- Without `academy`: HTTP 403.
-- With resolved `academy=4`: HTTP 200; empty enrollment list.
-- The skill must preserve this behavior and report an empty result rather than treating it as an error.
+## Live evidence
+The profile endpoint returned HTTP 200 and cohort records. The previous `/v1/admissions/academy/cohort/me` approach was unreliable for this account: academy=4 returned HTTP 200 with an empty list, while other profile academy IDs returned 403.
