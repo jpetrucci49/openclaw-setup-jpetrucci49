@@ -82,3 +82,22 @@ Joe first requested a skill to get the status of active projects. The initial in
 - No token value was read, printed, stored, or logged.
 - The revised proposal must be explicitly approved before installation or execution.
 - Memory search was attempted but unavailable because index metadata is missing.
+
+## 2026-09-15 — Pending work read skill
+
+### Conversation context
+Joe requested the next skill to get pending work and list what remains to be completed. This is defined as all assigned tasks with API status `PENDING`, without restricting task type, so projects, exercises, lessons, and quizzes are included.
+
+### Skill proposed
+
+6. **breathecode-pending-work-read**
+   - Focus: one assigned-task API action filtered to `task_status=PENDING`.
+   - Scope: list outstanding work across task types with pagination; no details, writes, delivery, or unrelated endpoints.
+   - Proposal ID: `breathecode-pending-work-read-20260915-984340c3df`
+   - Status: pending; not installed.
+
+### Security decisions
+- No external API request was made.
+- No token value was read, printed, stored, or logged.
+- The proposal must be explicitly approved before installation or execution.
+- Memory search was attempted but unavailable because index metadata is missing.
