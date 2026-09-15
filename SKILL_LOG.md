@@ -122,3 +122,22 @@ Joe requested the next skill to provide a general overview of how far along he i
 - No token value was read, printed, stored, or logged.
 - The proposal must be explicitly approved before installation or execution.
 - Memory search was attempted but unavailable because index metadata is missing.
+
+## 2026-09-15 — Cohort enrollment read skill
+
+### Conversation context
+Joe requested the next skill to answer which cohort he is in, including cohort schedule, role, and whether the enrollment is `ACTIVE` or `GRADUATED`. This uses the documented cohort-enrollment endpoint and reports all returned statuses without inferring a single cohort when multiple active records exist.
+
+### Skill proposed
+
+8. **breathecode-my-cohorts-read**
+   - Focus: one cohort-enrollment API action.
+   - Scope: list cohort identity, schedule, role, and educational status; no tasks, activity, projects, certificates, or writes.
+   - Proposal ID: `breathecode-my-cohorts-read-20260915-a5198a6664`
+   - Status: pending; not installed.
+
+### Security decisions
+- No external API request was made.
+- No token value was read, printed, stored, or logged.
+- The proposal must be explicitly approved before installation or execution.
+- Memory search was attempted but unavailable because index metadata is missing.
