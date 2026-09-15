@@ -88,12 +88,32 @@ Joe first requested a skill to get the status of active projects. The initial in
 ### Conversation context
 Joe requested the next skill to get pending work and list what remains to be completed. This is defined as all assigned tasks with API status `PENDING`, without restricting task type, so projects, exercises, lessons, and quizzes are included.
 
-### Skill proposed
+### Skill implemented
 
 6. **breathecode-pending-work-read**
    - Focus: one assigned-task API action filtered to `task_status=PENDING`.
    - Scope: list outstanding work across task types with pagination; no details, writes, delivery, or unrelated endpoints.
    - Proposal ID: `breathecode-pending-work-read-20260915-984340c3df`
+   - Status: applied and tested.
+   - Test result: HTTP 200; 43 pending tasks — 29 exercises, 2 lessons, and 12 projects.
+
+### Security decisions
+- No external API request was made.
+- No token value was read, printed, stored, or logged.
+- The proposal must be explicitly approved before installation or execution.
+- Memory search was attempted but unavailable because index metadata is missing.
+
+## 2026-09-15 — Progress summary read skill
+
+### Conversation context
+Joe requested the next skill to provide a general overview of how far along he is in the course. Based on the API reference, this is defined as an activity-based summary from `GET /v1/activity/me`, not a task list or invented completion percentage.
+
+### Skill proposed
+
+7. **breathecode-progress-summary-read**
+   - Focus: one personal activity API action.
+   - Scope: summarize the authenticated student’s learning activity, time, exercises, and recent activity when available; no tasks, projects, cohorts, assets, certificates, or writes.
+   - Proposal ID: `breathecode-progress-summary-read-20260915-cb0e269f02`
    - Status: pending; not installed.
 
 ### Security decisions
